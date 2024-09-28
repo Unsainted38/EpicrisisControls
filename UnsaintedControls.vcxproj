@@ -127,6 +127,9 @@
     <ClInclude Include="AddColumnUserControl.h">
       <FileType>CppControl</FileType>
     </ClInclude>
+    <ClInclude Include="ButtonPanel.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="TextMiniEditor.h">
@@ -137,6 +140,7 @@
   <ItemGroup>
     <ClCompile Include="AddColumnUserControl.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="ButtonPanel.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

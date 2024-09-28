@@ -1,1 +1,10 @@
-﻿
+﻿  pch.cpp
+  AddColumnUserControl.cpp
+  AssemblyInfo.cpp
+  ButtonPanelUserControl.cpp
+  TextMiniEditor.cpp
+  UnsaintedControls.cpp
+  Создание кода...
+  .NETFramework,Version=v4.8.AssemblyAttributes.cpp
+  AddColumnUserControl.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
+  UnsaintedControls.vcxproj -> C:\Users\erik\develop\host\projects\ThreadingTest\x64\Debug\UnsaintedControls.dll
