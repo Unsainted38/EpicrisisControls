@@ -1,7 +1,7 @@
-C:\Users\erik\develop\host\projects\UnsaintedControls\AddColumnUserControl.cpp;C:\Users\erik\develop\host\projects\UnsaintedControls\x64\Debug\AddColumnUserControl.obj
-C:\Users\erik\develop\host\projects\UnsaintedControls\AssemblyInfo.cpp;C:\Users\erik\develop\host\projects\UnsaintedControls\x64\Debug\AssemblyInfo.obj
-C:\Users\erik\develop\host\projects\UnsaintedControls\ButtonPanelUserControl.cpp;C:\Users\erik\develop\host\projects\UnsaintedControls\x64\Debug\ButtonPanelUserControl.obj
-C:\Users\erik\develop\host\projects\UnsaintedControls\pch.cpp;C:\Users\erik\develop\host\projects\UnsaintedControls\x64\Debug\pch.obj
-C:\Users\erik\develop\host\projects\UnsaintedControls\TextMiniEditor.cpp;C:\Users\erik\develop\host\projects\UnsaintedControls\x64\Debug\TextMiniEditor.obj
-C:\Users\erik\develop\host\projects\UnsaintedControls\UnsaintedControls.cpp;C:\Users\erik\develop\host\projects\UnsaintedControls\x64\Debug\UnsaintedControls.obj
-C:\Users\erik\develop\host\projects\UnsaintedControls\x64\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cpp;C:\Users\erik\develop\host\projects\UnsaintedControls\x64\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.obj
+C:\Users\erik\develop\host\common\libs\UnsaintedControls\AddColumnUserControl.cpp;C:\Users\erik\develop\host\common\libs\UnsaintedControls\x64\Debug\AddColumnUserControl.obj
+C:\Users\erik\develop\host\common\libs\UnsaintedControls\AssemblyInfo.cpp;C:\Users\erik\develop\host\common\libs\UnsaintedControls\x64\Debug\AssemblyInfo.obj
+C:\Users\erik\develop\host\common\libs\UnsaintedControls\ButtonPanel.cpp;C:\Users\erik\develop\host\common\libs\UnsaintedControls\x64\Debug\ButtonPanel.obj
+C:\Users\erik\develop\host\common\libs\UnsaintedControls\pch.cpp;C:\Users\erik\develop\host\common\libs\UnsaintedControls\x64\Debug\pch.obj
+C:\Users\erik\develop\host\common\libs\UnsaintedControls\TextMiniEditor.cpp;C:\Users\erik\develop\host\common\libs\UnsaintedControls\x64\Debug\TextMiniEditor.obj
+C:\Users\erik\develop\host\common\libs\UnsaintedControls\UnsaintedControls.cpp;C:\Users\erik\develop\host\common\libs\UnsaintedControls\x64\Debug\UnsaintedControls.obj
+C:\Users\erik\develop\host\common\libs\UnsaintedControls\x64\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cpp;C:\Users\erik\develop\host\common\libs\UnsaintedControls\x64\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.obj
