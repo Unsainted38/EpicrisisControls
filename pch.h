@@ -7,6 +7,8 @@
 #ifndef PCH_H
 #define PCH_H
 
+#include "AddColumnUserControl.h"
+#include "TableCreatorForm.h"
 // Добавьте сюда заголовочные файлы для предварительной компиляции
 
 #endif //PCH_H

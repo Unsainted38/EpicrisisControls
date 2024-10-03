@@ -75,7 +75,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)..\..\target\libs\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\..\..\target\libs\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\target\libs\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -129,11 +130,17 @@
     <ClInclude Include="AddColumnUserControl.h">
       <FileType>CppControl</FileType>
     </ClInclude>
+    <ClInclude Include="AnalyzesChangeControl.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
     <ClInclude Include="ButtonPanel.h">
       <FileType>CppControl</FileType>
     </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="TableCreatorForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="TextMiniEditor.h">
       <FileType>CppControl</FileType>
     </ClInclude>
@@ -141,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddColumnUserControl.cpp" />
+    <ClCompile Include="AnalyzesChangeControl.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="ButtonPanel.cpp" />
     <ClCompile Include="pch.cpp">
@@ -149,6 +157,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TableCreatorForm.cpp" />
     <ClCompile Include="TextMiniEditor.cpp" />
     <ClCompile Include="UnsaintedControls.cpp" />
   </ItemGroup>
@@ -174,9 +183,6 @@
     <Reference Include="DevExpress.Utils.v24.1">
       <HintPath>..\..\..\..\..\..\Program Files\DevExpress 24.1\Components\Bin\Framework\DevExpress.Utils.v24.1.dll</HintPath>
     </Reference>
-    <Reference Include="Parser">
-      <HintPath>..\..\..\target\libs\Parser\x64\Debug\Parser.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -187,11 +193,23 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationClient" />
+    <Reference Include="unsaintedWinAppLib">
+      <HintPath>..\..\..\..\target\libs\x64\Debug\unsaintedWinAppLib\unsaintedWinAppLib.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AddColumnUserControl.resx">
       <DependentUpon>AddColumnUserControl.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnalyzesChangeControl.resx">
+      <DependentUpon>AnalyzesChangeControl.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ButtonPanel.resx">
+      <DependentUpon>ButtonPanel.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableCreatorForm.resx">
+      <DependentUpon>TableCreatorForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TextMiniEditor.resx">
       <DependentUpon>TextMiniEditor.h</DependentUpon>

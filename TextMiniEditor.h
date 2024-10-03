@@ -1,4 +1,5 @@
 #pragma once
+#include "TableCreatorForm.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -6,6 +7,7 @@ using namespace System::Collections;
 using namespace System::Windows::Forms;
 using namespace System::Data;
 using namespace System::Drawing;
+using namespace unsaintedWinAppLib;
 
 
 namespace UnsaintedControls {
@@ -15,6 +17,7 @@ namespace UnsaintedControls {
 	/// </summary>
 	public ref class TextMiniEditor : public System::Windows::Forms::UserControl
 	{
+
 	public:
 		TextMiniEditor(void)
 		{
@@ -23,7 +26,14 @@ namespace UnsaintedControls {
 			//TODO: добавьте код конструктора
 			//
 		}
-
+		property String^ Rtf {
+			void set(String^ value) {
+				richTextBox->Rtf = value;
+			}
+			String^ get() {
+				return richTextBox->Rtf;
+			}
+		}
 	protected:
 		/// <summary>
 		/// Освободить все используемые ресурсы.
@@ -46,14 +56,16 @@ namespace UnsaintedControls {
 	private: System::Windows::Forms::Button^ Underline_button;
 	private: System::Windows::Forms::Button^ Uppercase_button;
 	private: System::Windows::Forms::Button^ Lowercase_button;
-	private: System::Windows::Forms::Button^ Unker_button;
+	private: System::Windows::Forms::Button^ Anchor_button;
+
 	private: System::Windows::Forms::Button^ NumList_button;
 	private: System::Windows::Forms::Button^ DotList_button;
 	private: System::Windows::Forms::Button^ CleanFormat_button;
 	private: System::Windows::Forms::Button^ LeftAlign_button;
 	private: System::Windows::Forms::Button^ CenterAlign_button;
 	private: System::Windows::Forms::Button^ RightAlign_button;
-	private: System::Windows::Forms::Button^ WideAlign_button;
+	private: System::Windows::Forms::Button^ JustAlign_button;
+
 	private: System::Windows::Forms::Button^ Date_button;
 	private: System::Windows::Forms::Button^ DropDownMenu_button;
 	private: System::Windows::Forms::Button^ Table_button;
@@ -64,7 +76,7 @@ namespace UnsaintedControls {
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -83,7 +95,7 @@ namespace UnsaintedControls {
 			this->Underline_button = (gcnew System::Windows::Forms::Button());
 			this->Uppercase_button = (gcnew System::Windows::Forms::Button());
 			this->Lowercase_button = (gcnew System::Windows::Forms::Button());
-			this->Unker_button = (gcnew System::Windows::Forms::Button());
+			this->Anchor_button = (gcnew System::Windows::Forms::Button());
 			this->NumList_button = (gcnew System::Windows::Forms::Button());
 			this->DotList_button = (gcnew System::Windows::Forms::Button());
 			this->CleanFormat_button = (gcnew System::Windows::Forms::Button());
@@ -91,7 +103,7 @@ namespace UnsaintedControls {
 			this->LeftAlign_button = (gcnew System::Windows::Forms::Button());
 			this->CenterAlign_button = (gcnew System::Windows::Forms::Button());
 			this->RightAlign_button = (gcnew System::Windows::Forms::Button());
-			this->WideAlign_button = (gcnew System::Windows::Forms::Button());
+			this->JustAlign_button = (gcnew System::Windows::Forms::Button());
 			this->separatorControl2 = (gcnew DevExpress::XtraEditors::SeparatorControl());
 			this->Date_button = (gcnew System::Windows::Forms::Button());
 			this->DropDownMenu_button = (gcnew System::Windows::Forms::Button());
@@ -115,13 +127,14 @@ namespace UnsaintedControls {
 			this->TextMiniEditor_tableLayoutPanel->Controls->Add(this->TextMiniEditor_flowLayoutPanel, 0, 0);
 			this->TextMiniEditor_tableLayoutPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->TextMiniEditor_tableLayoutPanel->Location = System::Drawing::Point(0, 0);
+			this->TextMiniEditor_tableLayoutPanel->Margin = System::Windows::Forms::Padding(0);
 			this->TextMiniEditor_tableLayoutPanel->Name = L"TextMiniEditor_tableLayoutPanel";
 			this->TextMiniEditor_tableLayoutPanel->RowCount = 2;
 			this->TextMiniEditor_tableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 			this->TextMiniEditor_tableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 			this->TextMiniEditor_tableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
 				20)));
-			this->TextMiniEditor_tableLayoutPanel->Size = System::Drawing::Size(800, 170);
+			this->TextMiniEditor_tableLayoutPanel->Size = System::Drawing::Size(738, 107);
 			this->TextMiniEditor_tableLayoutPanel->TabIndex = 1;
 			// 
 			// richTextBox
@@ -131,12 +144,14 @@ namespace UnsaintedControls {
 			this->richTextBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->richTextBox->Location = System::Drawing::Point(4, 53);
+			this->richTextBox->MinimumSize = System::Drawing::Size(730, 50);
 			this->richTextBox->Name = L"richTextBox";
 			this->richTextBox->RightMargin = 785;
-			this->richTextBox->Size = System::Drawing::Size(792, 113);
+			this->richTextBox->Size = System::Drawing::Size(730, 50);
 			this->richTextBox->TabIndex = 0;
 			this->richTextBox->Text = L"";
-			this->richTextBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &TextMiniEditor::richTextBox_KeyDown);
+			this->richTextBox->TextChanged += gcnew System::EventHandler(this, &TextMiniEditor::richTextBox_TextChanged);
+			this->richTextBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &TextMiniEditor::TextMiniEditor_KeyDown);
 			// 
 			// TextMiniEditor_flowLayoutPanel
 			// 
@@ -148,7 +163,7 @@ namespace UnsaintedControls {
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->Underline_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->Uppercase_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->Lowercase_button);
-			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->Unker_button);
+			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->Anchor_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->NumList_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->DotList_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->CleanFormat_button);
@@ -156,16 +171,16 @@ namespace UnsaintedControls {
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->LeftAlign_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->CenterAlign_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->RightAlign_button);
-			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->WideAlign_button);
+			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->JustAlign_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->separatorControl2);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->Date_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->DropDownMenu_button);
 			this->TextMiniEditor_flowLayoutPanel->Controls->Add(this->Table_button);
-			this->TextMiniEditor_flowLayoutPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->TextMiniEditor_flowLayoutPanel->Location = System::Drawing::Point(1, 1);
 			this->TextMiniEditor_flowLayoutPanel->Margin = System::Windows::Forms::Padding(0);
+			this->TextMiniEditor_flowLayoutPanel->MinimumSize = System::Drawing::Size(736, 0);
 			this->TextMiniEditor_flowLayoutPanel->Name = L"TextMiniEditor_flowLayoutPanel";
-			this->TextMiniEditor_flowLayoutPanel->Size = System::Drawing::Size(798, 48);
+			this->TextMiniEditor_flowLayoutPanel->Size = System::Drawing::Size(736, 48);
 			this->TextMiniEditor_flowLayoutPanel->TabIndex = 1;
 			// 
 			// Fontsize_numericUpDown
@@ -292,28 +307,28 @@ namespace UnsaintedControls {
 			this->Lowercase_button->Size = System::Drawing::Size(35, 36);
 			this->Lowercase_button->TabIndex = 6;
 			this->Lowercase_button->TabStop = false;
-			this->Lowercase_button->Text = L"X";
+			this->Lowercase_button->Text = L"x";
 			this->Lowercase_button->UseVisualStyleBackColor = true;
 			this->Lowercase_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::Lowercase_button_Click);
 			// 
-			// Unker_button
+			// Anchor_button
 			// 
-			this->Unker_button->AutoSize = true;
-			this->Unker_button->Dock = System::Windows::Forms::DockStyle::Left;
-			this->Unker_button->FlatAppearance->BorderColor = System::Drawing::Color::Black;
-			this->Unker_button->FlatAppearance->BorderSize = 0;
-			this->Unker_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->Unker_button->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->Anchor_button->AutoSize = true;
+			this->Anchor_button->Dock = System::Windows::Forms::DockStyle::Left;
+			this->Anchor_button->FlatAppearance->BorderColor = System::Drawing::Color::Black;
+			this->Anchor_button->FlatAppearance->BorderSize = 0;
+			this->Anchor_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->Anchor_button->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->Unker_button->Location = System::Drawing::Point(270, 6);
-			this->Unker_button->Margin = System::Windows::Forms::Padding(3, 6, 3, 6);
-			this->Unker_button->Name = L"Unker_button";
-			this->Unker_button->Size = System::Drawing::Size(36, 36);
-			this->Unker_button->TabIndex = 7;
-			this->Unker_button->TabStop = false;
-			this->Unker_button->Text = L"B";
-			this->Unker_button->UseVisualStyleBackColor = true;
-			this->Unker_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::Unker_button_Click);
+			this->Anchor_button->Location = System::Drawing::Point(270, 6);
+			this->Anchor_button->Margin = System::Windows::Forms::Padding(3, 6, 3, 6);
+			this->Anchor_button->Name = L"Anchor_button";
+			this->Anchor_button->Size = System::Drawing::Size(36, 36);
+			this->Anchor_button->TabIndex = 7;
+			this->Anchor_button->TabStop = false;
+			this->Anchor_button->Text = L"A";
+			this->Anchor_button->UseVisualStyleBackColor = true;
+			this->Anchor_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::Unker_button_Click);
 			// 
 			// NumList_button
 			// 
@@ -330,7 +345,7 @@ namespace UnsaintedControls {
 			this->NumList_button->Size = System::Drawing::Size(36, 36);
 			this->NumList_button->TabIndex = 8;
 			this->NumList_button->TabStop = false;
-			this->NumList_button->Text = L"B";
+			this->NumList_button->Text = L"N";
 			this->NumList_button->UseVisualStyleBackColor = true;
 			this->NumList_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::NumList_button_Click);
 			// 
@@ -368,7 +383,7 @@ namespace UnsaintedControls {
 			this->CleanFormat_button->Size = System::Drawing::Size(36, 36);
 			this->CleanFormat_button->TabIndex = 10;
 			this->CleanFormat_button->TabStop = false;
-			this->CleanFormat_button->Text = L"B";
+			this->CleanFormat_button->Text = L"T";
 			this->CleanFormat_button->UseVisualStyleBackColor = true;
 			this->CleanFormat_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::CleanFormat_button_Click);
 			// 
@@ -400,7 +415,7 @@ namespace UnsaintedControls {
 			this->LeftAlign_button->Size = System::Drawing::Size(36, 36);
 			this->LeftAlign_button->TabIndex = 12;
 			this->LeftAlign_button->TabStop = false;
-			this->LeftAlign_button->Text = L"B";
+			this->LeftAlign_button->Text = L"L";
 			this->LeftAlign_button->UseVisualStyleBackColor = true;
 			this->LeftAlign_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::LeftAlign_button_Click);
 			// 
@@ -419,7 +434,7 @@ namespace UnsaintedControls {
 			this->CenterAlign_button->Size = System::Drawing::Size(36, 36);
 			this->CenterAlign_button->TabIndex = 13;
 			this->CenterAlign_button->TabStop = false;
-			this->CenterAlign_button->Text = L"B";
+			this->CenterAlign_button->Text = L"C";
 			this->CenterAlign_button->UseVisualStyleBackColor = true;
 			this->CenterAlign_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::CenterAlign_button_Click);
 			// 
@@ -438,28 +453,28 @@ namespace UnsaintedControls {
 			this->RightAlign_button->Size = System::Drawing::Size(36, 36);
 			this->RightAlign_button->TabIndex = 14;
 			this->RightAlign_button->TabStop = false;
-			this->RightAlign_button->Text = L"B";
+			this->RightAlign_button->Text = L"R";
 			this->RightAlign_button->UseVisualStyleBackColor = true;
 			this->RightAlign_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::RightAlign_button_Click);
 			// 
-			// WideAlign_button
+			// JustAlign_button
 			// 
-			this->WideAlign_button->AutoSize = true;
-			this->WideAlign_button->Dock = System::Windows::Forms::DockStyle::Left;
-			this->WideAlign_button->FlatAppearance->BorderColor = System::Drawing::Color::Black;
-			this->WideAlign_button->FlatAppearance->BorderSize = 0;
-			this->WideAlign_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->WideAlign_button->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->JustAlign_button->AutoSize = true;
+			this->JustAlign_button->Dock = System::Windows::Forms::DockStyle::Left;
+			this->JustAlign_button->FlatAppearance->BorderColor = System::Drawing::Color::Black;
+			this->JustAlign_button->FlatAppearance->BorderSize = 0;
+			this->JustAlign_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->JustAlign_button->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->WideAlign_button->Location = System::Drawing::Point(566, 6);
-			this->WideAlign_button->Margin = System::Windows::Forms::Padding(3, 6, 3, 6);
-			this->WideAlign_button->Name = L"WideAlign_button";
-			this->WideAlign_button->Size = System::Drawing::Size(36, 36);
-			this->WideAlign_button->TabIndex = 15;
-			this->WideAlign_button->TabStop = false;
-			this->WideAlign_button->Text = L"B";
-			this->WideAlign_button->UseVisualStyleBackColor = true;
-			this->WideAlign_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::WideAlign_button_Click);
+			this->JustAlign_button->Location = System::Drawing::Point(566, 6);
+			this->JustAlign_button->Margin = System::Windows::Forms::Padding(3, 6, 3, 6);
+			this->JustAlign_button->Name = L"JustAlign_button";
+			this->JustAlign_button->Size = System::Drawing::Size(36, 36);
+			this->JustAlign_button->TabIndex = 15;
+			this->JustAlign_button->TabStop = false;
+			this->JustAlign_button->Text = L"J";
+			this->JustAlign_button->UseVisualStyleBackColor = true;
+			this->JustAlign_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::JustAlign_button_Click);
 			// 
 			// separatorControl2
 			// 
@@ -489,7 +504,7 @@ namespace UnsaintedControls {
 			this->Date_button->Size = System::Drawing::Size(36, 36);
 			this->Date_button->TabIndex = 17;
 			this->Date_button->TabStop = false;
-			this->Date_button->Text = L"B";
+			this->Date_button->Text = L"D";
 			this->Date_button->UseVisualStyleBackColor = true;
 			this->Date_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::Date_button_Click);
 			// 
@@ -505,10 +520,10 @@ namespace UnsaintedControls {
 			this->DropDownMenu_button->Location = System::Drawing::Point(652, 6);
 			this->DropDownMenu_button->Margin = System::Windows::Forms::Padding(3, 6, 3, 6);
 			this->DropDownMenu_button->Name = L"DropDownMenu_button";
-			this->DropDownMenu_button->Size = System::Drawing::Size(36, 36);
+			this->DropDownMenu_button->Size = System::Drawing::Size(39, 36);
 			this->DropDownMenu_button->TabIndex = 18;
 			this->DropDownMenu_button->TabStop = false;
-			this->DropDownMenu_button->Text = L"B";
+			this->DropDownMenu_button->Text = L"M";
 			this->DropDownMenu_button->UseVisualStyleBackColor = true;
 			this->DropDownMenu_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::DropDownMenu_button_Click);
 			// 
@@ -521,25 +536,28 @@ namespace UnsaintedControls {
 			this->Table_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->Table_button->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->Table_button->Location = System::Drawing::Point(694, 6);
+			this->Table_button->Location = System::Drawing::Point(697, 6);
 			this->Table_button->Margin = System::Windows::Forms::Padding(3, 6, 3, 6);
 			this->Table_button->Name = L"Table_button";
 			this->Table_button->Size = System::Drawing::Size(36, 36);
 			this->Table_button->TabIndex = 19;
 			this->Table_button->TabStop = false;
-			this->Table_button->Text = L"B";
+			this->Table_button->Text = L"T";
 			this->Table_button->UseVisualStyleBackColor = true;
 			this->Table_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::Table_button_Click);
 			// 
 			// TextMiniEditor
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleDimensions = System::Drawing::SizeF(96, 96);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
+			this->AutoSize = true;
+			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			this->BackColor = System::Drawing::SystemColors::ControlLightLight;
 			this->Controls->Add(this->TextMiniEditor_tableLayoutPanel);
-			this->MinimumSize = System::Drawing::Size(800, 170);
+			this->Margin = System::Windows::Forms::Padding(0);
+			this->MinimumSize = System::Drawing::Size(738, 0);
 			this->Name = L"TextMiniEditor";
-			this->Size = System::Drawing::Size(800, 170);
+			this->Size = System::Drawing::Size(738, 107);
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &TextMiniEditor::TextMiniEditor_KeyDown);
 			this->TextMiniEditor_tableLayoutPanel->ResumeLayout(false);
 			this->TextMiniEditor_tableLayoutPanel->PerformLayout();
@@ -554,141 +572,205 @@ namespace UnsaintedControls {
 
 		}
 #pragma endregion
+	private: System::Void Fontsize_numericUpDown_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
 
-void ToggleFontStyle(FontStyle style) {
-	System::Drawing::Font^ currentFont = richTextBox->SelectionFont;
-	if (currentFont != nullptr)
-	{
-		FontStyle newStyle;
-		if (currentFont->Style.HasFlag(style))
-			newStyle = currentFont->Style & ~style;
+		// Сохраняем текущие позицию и длину выделения
+		int previousSelectionStart = richTextBox->SelectionStart;
+		int previousSelectionLength = richTextBox->SelectionLength;
+
+		// Проверяем, есть ли выделенный текст
+		if (previousSelectionLength > 0) {
+			// Проверяем, что SelectionFont не null, чтобы избежать исключений
+			if (richTextBox->SelectionFont != nullptr) {
+				// Изменяем шрифт только для выделенного текста, если размер отличается
+				if (richTextBox->SelectionFont->Size != (float)Fontsize_numericUpDown->Value) {
+					richTextBox->SelectionFont = gcnew System::Drawing::Font(richTextBox->SelectionFont->FontFamily,
+						(float)Fontsize_numericUpDown->Value,
+						richTextBox->SelectionFont->Style);
+				}
+			}
+		}
+		else {
+			// Нет выделенного текста: изменяем шрифт для дальнейшего ввода (для текущей позиции каретки)
+			if (richTextBox->Font->Size != (float)Fontsize_numericUpDown->Value) {
+				richTextBox->SelectionFont = gcnew System::Drawing::Font(richTextBox->Font->FontFamily,
+					(float)Fontsize_numericUpDown->Value,
+					richTextBox->Font->Style);
+			}
+		}
+
+		// Возвращаем каретку в прежнее положение и фокус на RichTextBox
+		richTextBox->SelectionStart = previousSelectionStart;
+		richTextBox->SelectionLength = previousSelectionLength;
+		richTextBox->Focus();
+	}
+	private: System::Void LeftAlign() {
+		Toolbar_button_Click(LeftAlign_button);
+		RightAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		CenterAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		JustAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		richTextBox->SelectionAlignment = HorizontalAlignment::Left;
+	}
+	private: System::Void LeftAlign_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		LeftAlign();
+	}
+	private: System::Void CenterAlign() {
+		Toolbar_button_Click(CenterAlign_button);
+		RightAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		LeftAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		JustAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		richTextBox->SelectionAlignment = HorizontalAlignment::Center;
+	}
+	private: System::Void CenterAlign_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		CenterAlign();
+	}
+	private: System::Void RightAlign() {
+		Toolbar_button_Click(RightAlign_button);
+		LeftAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		CenterAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		JustAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		richTextBox->SelectionAlignment = HorizontalAlignment::Right;
+	}
+	private: System::Void RightAlign_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		RightAlign();
+	}
+	private: System::Void JustAlign() {
+		Toolbar_button_Click(JustAlign_button);
+		LeftAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		CenterAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		RightAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		//richTextBox. = System::Windows::TextAlignment::Justify;
+	}
+	private: System::Void JustAlign_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		JustAlign();
+	}
+	private: System::Void Toolbar_button_Click(Button^ button) {
+		if (button->BackColor != Color::FromKnownColor(KnownColor::AppWorkspace))
+			button->BackColor = Color::FromKnownColor(KnownColor::AppWorkspace);
 		else
-			newStyle = currentFont->Style | style;
+			button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
+		richTextBox->Focus();
+	}
+		   void ToggleFontStyle(FontStyle style) {
+			   System::Drawing::Font^ currentFont = richTextBox->SelectionFont;
+			   if (currentFont != nullptr) {
+				   FontStyle newStyle;
+				   if (currentFont->Style.HasFlag(style))
+					   newStyle = currentFont->Style & ~style;
+				   else
+					   newStyle = currentFont->Style | style;
 
-		richTextBox->SelectionFont = gcnew System::Drawing::Font(currentFont, newStyle);
+				   richTextBox->SelectionFont = gcnew System::Drawing::Font(currentFont, newStyle);
+			   }
+		   }
+	private: System::Void TextMiniEditor_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+		if (e->Control && (e->KeyCode == Keys::B)) {
+
+		}
+		if (e->Control && (e->KeyCode == Keys::I)) {
+			e->SuppressKeyPress = true;
+			Italic();
+		}
+		if (e->Control && (e->KeyCode == Keys::U)) {
+			Underline();
+		}
+		if (e->Control && (e->KeyCode == Keys::L)) {
+			LeftAlign();
+		}
+		if (e->Control && (e->KeyCode == Keys::R)) {
+			RightAlign();
+		}
+		if (e->Control && (e->KeyCode == Keys::E)) {
+			CenterAlign();
+		}
+		if (e->Control && (e->KeyCode == Keys::J)) {
+			JustAlign();
+		}
+		/*if (e->Control && (e->KeyCode == Keys::Oemplus)) {
+			rtfCreator->AddRowToTable(richTextBox);
+		}*/
 	}
-	
-}
-private: System::Void Bold_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	ToggleFontStyle(FontStyle::Bold);
-}
-private: System::Void Italic_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	ToggleFontStyle(FontStyle::Italic);
-}
-private: System::Void Underline_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	ToggleFontStyle(FontStyle::Underline);
-}
-private: System::Void Uppercase_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	if (richTextBox->SelectionCharOffset == 0) {
-		richTextBox->SelectionCharOffset = 10;
-	}
-	else
-		richTextBox->SelectionCharOffset = 0;
-}
-private: System::Void Lowercase_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	if (richTextBox->SelectionCharOffset == 0)
-		richTextBox->SelectionCharOffset = -10;
-	else
-		richTextBox->SelectionCharOffset = 0;
-}
-private: System::Void Unker_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	
-}
-private: System::Void NumList_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-}
-private: System::Void DotList_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-}
-private: System::Void CleanFormat_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	richTextBox->SelectionFont = gcnew System::Drawing::Font(richTextBox->SelectionFont, FontStyle::Regular);
-	richTextBox->SelectionCharOffset = 0;
-}
-private: System::Void LeftAlign_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	CenterAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	RightAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	WideAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	richTextBox->SelectionAlignment = HorizontalAlignment::Left;
-}
-private: System::Void CenterAlign_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	RightAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	LeftAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	WideAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	richTextBox->SelectionAlignment = HorizontalAlignment::Center;
-}
-private: System::Void RightAlign_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	CenterAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	LeftAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	WideAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	richTextBox->SelectionAlignment = HorizontalAlignment::Right;
-}
-private: System::Void WideAlign_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Toolbar_button_Click(sender);
-	CenterAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	LeftAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	RightAlign_button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	//richTextBox. = System::Windows::TextAlignment::Justify;
-}
-private: System::Void Date_button_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void DropDownMenu_button_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void Table_button_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void Toolbar_button_Click(System::Object^ sender) {
-	Button^ button = safe_cast<Button^>(sender);
-	if (button->BackColor != Color::FromKnownColor(KnownColor::AppWorkspace))
-		button->BackColor = Color::FromKnownColor(KnownColor::AppWorkspace);
-	else
-		button->BackColor = Color::FromKnownColor(KnownColor::ControlLightLight);
-	richTextBox->Focus();
-}
-private: System::Void Fontsize_numericUpDown_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
-	System::Drawing::Font^ currentFont = richTextBox->SelectionFont;
-	if (currentFont != nullptr) {
-		System::Drawing::FontStyle oldStyle = currentFont->Style;
-		float newSize = (float)safe_cast<NumericUpDown^>(sender)->Value;
-		System::Drawing::FontFamily^ oldFamily = currentFont->FontFamily;
-		richTextBox->SelectionFont = gcnew System::Drawing::Font(oldFamily, newSize, oldStyle);
-	}
-	richTextBox->Focus();
-}
-private: System::Void TextMiniEditor_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-	if (e->Control && (e->KeyCode == Keys::B)) {
-		Toolbar_button_Click(sender);
-		ToggleFontStyle(FontStyle::Bold);
-	}
-	if (e->Control && (e->KeyCode == Keys::I)) {
-		Toolbar_button_Click(sender);
-		ToggleFontStyle(FontStyle::Italic);
-	}
-	if (e->Control && (e->KeyCode == Keys::U)) {
-		Toolbar_button_Click(sender);
-		ToggleFontStyle(FontStyle::Underline);
-	}
-}
-private: System::Void richTextBox_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-	if (e->Control && (e->KeyCode == Keys::B)) {
+	private: System::Void Bold() {
 		Toolbar_button_Click(Bold_button);
 		ToggleFontStyle(FontStyle::Bold);
 	}
-	if (e->Control && (e->KeyCode == Keys::I)) {
+	private: System::Void Italic() {
 		Toolbar_button_Click(Italic_button);
 		ToggleFontStyle(FontStyle::Italic);
 	}
-	if (e->Control && (e->KeyCode == Keys::U)) {
+	private: System::Void Underline() {
 		Toolbar_button_Click(Underline_button);
 		ToggleFontStyle(FontStyle::Underline);
 	}
-}
-};
+	private: System::Void Bold_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Bold();
+	}
+	private: System::Void Italic_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Italic();
+	}
+	private: System::Void Underline_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Underline();
+	}
+	private: System::Void Uppercase() {
+		Toolbar_button_Click(Uppercase_button);
+		if (richTextBox->SelectionCharOffset == 0) {
+			richTextBox->SelectionCharOffset = Convert::ToInt16(richTextBox->Font->SizeInPoints) - 5;
+		}
+		else
+			richTextBox->SelectionCharOffset = 0;
+	}
+
+	private: System::Void Uppercase_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Uppercase();
+	}
+	private: System::Void Lowercase() {
+		Toolbar_button_Click(Lowercase_button);
+		if (richTextBox->SelectionCharOffset == 0)
+			richTextBox->SelectionCharOffset = Convert::ToInt16(-richTextBox->Font->SizeInPoints) + 5;
+		else
+			richTextBox->SelectionCharOffset = 0;
+	}
+	private: System::Void Lowercase_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Lowercase();
+	}
+	private: System::Void Unker_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Toolbar_button_Click(Anchor_button);
+	}
+	private: System::Void NumList_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Toolbar_button_Click(NumList_button);
+	}
+	private: System::Void DotList_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Toolbar_button_Click(DotList_button);
+	}
+	private: System::Void CleanFormat_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		richTextBox->SelectionFont = gcnew System::Drawing::Font(richTextBox->SelectionFont, FontStyle::Regular);
+		richTextBox->SelectionCharOffset = 0;
+	}
+	private: System::Void Date_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void DropDownMenu_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void Table_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		TableCreatorForm^ tableForm = gcnew TableCreatorForm();
+		tableForm->ParentRichTextBox = richTextBox;
+		tableForm->FormClosed += gcnew FormClosedEventHandler(this, &TextMiniEditor::OnTableCreatorFormClosed);
+		tableForm->ShowDialog();
+	}
+	private: System::Void OnTableCreatorFormClosed(Object^ sender, FormClosedEventArgs^ e) {
+	}
+	private: System::Void richTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		// Устанавливаем минимальную и максимальную высоту для RichTextBox
+		int minHeight = 50;
+		int maxHeight = 200;
+
+		// Измеряем размер текста в RichTextBox
+		System::Drawing::Size textSize = TextRenderer::MeasureText(richTextBox->Text, richTextBox->Font, richTextBox->ClientSize, TextFormatFlags::TextBoxControl);
+
+		// Рассчитываем новую высоту с учетом отступов
+		int newHeight = textSize.Height + richTextBox->Margin.Vertical;
+
+		// Устанавливаем новую высоту с учетом минимальных и максимальных границ
+		richTextBox->Height = System::Math::Max(minHeight, System::Math::Min(newHeight, maxHeight));
+	}
+	};
 }
