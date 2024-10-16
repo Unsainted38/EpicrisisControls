@@ -43,14 +43,17 @@ namespace UnsaintedControls {
 			//TODO: добавьте код конструктора
 			//
 		}
-		void AddButtonPanel(String^ title) {
+		void AddButtonPanel(String^ title) {	
+			if (items->ContainsKey(title))
+				return;
 			ButtonPanel^ b_panel = gcnew ButtonPanel(title, m_editable, m_removable, this, flowLayoutPanel1, textBox);
+			items->Add(title, b_panel);
 			this->Items_tableLayoutPanel->RowStyles->Add(gcnew System::Windows::Forms::RowStyle(SizeType::AutoSize));
 			this->Items_tableLayoutPanel->Controls->Add(b_panel);
 			b_panel->Dock = System::Windows::Forms::DockStyle::Fill;
 			b_panel->MainButton->Click += gcnew EventHandler(b_panel, &ButtonPanel::main_button_Click);
 			flowLayoutPanel1->Controls->Add(textBox);			
-			items->Add(title, b_panel);
+			
 			textBox->AutoCompleteCustomSource->Add(title);
 		}
 		void AddButtonPanelsRange(List<String^>^ titles) {
@@ -59,13 +62,16 @@ namespace UnsaintedControls {
 				return;
 			this->Items_tableLayoutPanel->RowCount = titles->Count;
 			for each (String^ title in titles) {
+				if (items->ContainsKey(title))
+					return;
 				ButtonPanel^ b_panel = gcnew ButtonPanel(title, m_editable, m_removable, this, flowLayoutPanel1, textBox);
+				items->Add(title, b_panel);				
 				this->Items_tableLayoutPanel->RowStyles->Add(gcnew System::Windows::Forms::RowStyle(SizeType::AutoSize));
 				this->Items_tableLayoutPanel->Controls->Add(b_panel);
 				b_panel->Dock = System::Windows::Forms::DockStyle::Fill;
 				b_panel->MainButton->Click += gcnew EventHandler(b_panel, &ButtonPanel::main_button_Click);
 				textBox->AutoCompleteCustomSource->Add(title);
-				items->Add(title, b_panel);
+				
 			}
 			flowLayoutPanel1->Controls->Add(textBox);
 		}
@@ -445,7 +451,7 @@ private: System::Void flowLayoutPanel1_ControlRemoved(System::Object^ sender, Sy
 		else m_lastLabel = nullptr;
 		if (m_rtb == nullptr)
 			return;
-		m_rtb->Text = m_rtb->Text->Remove(m_rtb->Text->IndexOf(removed_label->Title), removed_label->Title->Length);
+		m_rtb->Text = m_rtb->Text->Remove(m_rtb->Text->ToLower()->IndexOf(removed_label->Title), removed_label->Title->Length);
 		m_rtb->Text = m_rtb->Text->Trim(gcnew array<wchar_t>(2){',', ' '});
 	}
 }
