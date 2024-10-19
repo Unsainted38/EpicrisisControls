@@ -57,12 +57,27 @@ namespace UnsaintedControls {
 			m_flowpanel = fpanel;
 			m_textbox = tbox;
 		}
+		ButtonPanel(String^ title, bool editV, bool deleteV, Control^ parent, FlowLayoutPanel^ fpanel, TextBox^ tbox , bool tabstop) {
+			InitializeComponent();
+			this->TabStop = tabstop;
+			main_button->TabStop = tabstop;
+			DeleteButtonVisibility = deleteV;
+			EditButtonVisibility = editV;
+			Title = title;
+			m_flowpanel = fpanel;
+			m_textbox = tbox;
+		}
 		ButtonPanel(String^ title, bool editV, bool deleteV, TextBox^ tbox) {
 			InitializeComponent();
 			DeleteButtonVisibility = deleteV;
 			EditButtonVisibility = editV;
 			Title = title;
 			m_textbox = tbox;
+		}
+		property bool MainButtonTabStop {
+			void set(bool value) {
+				main_button->TabStop = value;
+			}
 		}
 		property String^ Title {
 			void set(String^ value) {
@@ -261,13 +276,13 @@ private: System::Void delete_button_Click(System::Object^ sender, System::EventA
 private: System::Void edit_button_Click(System::Object^ sender, System::EventArgs^ e) {
 
 }
-public: System::Void main_button_Click(System::Object^ sender, System::EventArgs^ e) {	
-	m_textbox->Parent->Controls->Remove(m_textbox);
-	CustomLabelWithButton^ label = gcnew CustomLabelWithButton(this->Title, this);
-	m_flowpanel->Controls->Add(label);
-	this->Hide();
-	m_flowpanel->Controls->Add(m_textbox);
-	m_textbox->Focus();
-}
+	public: System::Void main_button_Click(System::Object^ sender, System::EventArgs^ e) {		
+		m_textbox->Parent->Controls->Remove(m_textbox);
+		CustomLabelWithButton^ label = gcnew CustomLabelWithButton(this->Title, this);
+		m_flowpanel->Controls->Add(label);
+		this->Hide();
+		m_flowpanel->Controls->Add(m_textbox);
+		m_textbox->Focus();
+	}
 };
 }

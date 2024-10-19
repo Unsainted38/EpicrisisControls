@@ -25,6 +25,7 @@ namespace UnsaintedControls {
 		TextBox^ m_textBox;		
 		Locker^ m_locker;
 		RichTextBox^ m_rtb;
+		bool m_buttonPanelsTabStop = false;
 		bool m_editable = false;
 		bool m_removable = false;
 	private: System::Windows::Forms::Panel^ panel1;
@@ -35,10 +36,11 @@ namespace UnsaintedControls {
 	public:
 		SuperComboBox(void)
 		{
-			InitializeComponent();
 			items = gcnew Dictionary<String^, ButtonPanel^>();
 			m_selected = gcnew List<String^>();
 			m_locker = gcnew Locker(100);
+			InitializeComponent();
+			
 			//
 			//TODO: добавьте код конструктора
 			//
@@ -74,6 +76,22 @@ namespace UnsaintedControls {
 				
 			}
 			flowLayoutPanel1->Controls->Add(textBox);
+		}
+		property bool ButtonPanelsTabStop {
+			void set(bool value) {
+				m_buttonPanelsTabStop = value;
+				for each (ButtonPanel ^ item in items->Values) {
+					item->MainButtonTabStop = value;
+				}
+			}
+			bool get() {
+				return m_buttonPanelsTabStop;
+			}
+		}
+		property List<ButtonPanel^>^ ButtonPanels {
+			List<ButtonPanel^>^ get() {
+				return gcnew List<ButtonPanel^>(items->Values);
+			}
 		}
 		property RichTextBox^ ResultRichTextBox {
 			void set(RichTextBox^ value) {
@@ -264,7 +282,7 @@ namespace UnsaintedControls {
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
-			this->tableLayoutPanel1->Size = System::Drawing::Size(130, 110);
+			this->tableLayoutPanel1->Size = System::Drawing::Size(360, 110);
 			this->tableLayoutPanel1->TabIndex = 0;
 			// 
 			// groupBox
@@ -276,7 +294,7 @@ namespace UnsaintedControls {
 			this->groupBox->Margin = System::Windows::Forms::Padding(0);
 			this->groupBox->MinimumSize = System::Drawing::Size(0, 110);
 			this->groupBox->Name = L"groupBox";
-			this->groupBox->Size = System::Drawing::Size(130, 110);
+			this->groupBox->Size = System::Drawing::Size(360, 110);
 			this->groupBox->TabIndex = 1;
 			this->groupBox->TabStop = false;
 			this->groupBox->Text = L"groupBox1";
@@ -290,7 +308,7 @@ namespace UnsaintedControls {
 			this->panel1->Location = System::Drawing::Point(3, 16);
 			this->panel1->Margin = System::Windows::Forms::Padding(0);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(124, 91);
+			this->panel1->Size = System::Drawing::Size(354, 91);
 			this->panel1->TabIndex = 0;
 			this->panel1->Click += gcnew System::EventHandler(this, &SuperComboBox::panel1_Click);
 			// 
@@ -303,7 +321,7 @@ namespace UnsaintedControls {
 			this->flowLayoutPanel1->Location = System::Drawing::Point(0, 0);
 			this->flowLayoutPanel1->Margin = System::Windows::Forms::Padding(0);
 			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			this->flowLayoutPanel1->Size = System::Drawing::Size(124, 29);
+			this->flowLayoutPanel1->Size = System::Drawing::Size(354, 29);
 			this->flowLayoutPanel1->TabIndex = 0;
 			this->flowLayoutPanel1->Click += gcnew System::EventHandler(this, &SuperComboBox::flowLayoutPanel1_Click);
 			this->flowLayoutPanel1->ControlAdded += gcnew System::Windows::Forms::ControlEventHandler(this, &SuperComboBox::flowLayoutPanel1_ControlAdded);
@@ -339,8 +357,9 @@ namespace UnsaintedControls {
 			this->panel->Margin = System::Windows::Forms::Padding(0);
 			this->panel->MaximumSize = System::Drawing::Size(0, 200);
 			this->panel->Name = L"panel";
-			this->panel->Size = System::Drawing::Size(130, 0);
+			this->panel->Size = System::Drawing::Size(360, 0);
 			this->panel->TabIndex = 1;
+			this->panel->TabStop = true;
 			// 
 			// Items_tableLayoutPanel
 			// 
@@ -355,8 +374,9 @@ namespace UnsaintedControls {
 			this->Items_tableLayoutPanel->Name = L"Items_tableLayoutPanel";
 			this->Items_tableLayoutPanel->RowCount = 1;
 			this->Items_tableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
-			this->Items_tableLayoutPanel->Size = System::Drawing::Size(130, 0);
+			this->Items_tableLayoutPanel->Size = System::Drawing::Size(360, 0);
 			this->Items_tableLayoutPanel->TabIndex = 2;
+			this->Items_tableLayoutPanel->TabStop = true;
 			this->Items_tableLayoutPanel->Visible = false;
 			// 
 			// SuperComboBox
@@ -368,7 +388,7 @@ namespace UnsaintedControls {
 			this->Margin = System::Windows::Forms::Padding(0);
 			this->MinimumSize = System::Drawing::Size(130, 0);
 			this->Name = L"SuperComboBox";
-			this->Size = System::Drawing::Size(130, 110);
+			this->Size = System::Drawing::Size(360, 110);
 			this->Click += gcnew System::EventHandler(this, &SuperComboBox::SuperComboBox_Click);
 			this->Enter += gcnew System::EventHandler(this, &SuperComboBox::SuperComboBox_Enter);
 			this->Leave += gcnew System::EventHandler(this, &SuperComboBox::SuperComboBox_Leave);

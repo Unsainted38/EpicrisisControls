@@ -136,6 +136,9 @@
     <ClInclude Include="AnalyzesListButton.h">
       <FileType>CppControl</FileType>
     </ClInclude>
+    <ClInclude Include="AnamnesisMorbiPagePanel.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
     <ClInclude Include="ButtonPanel.h">
       <FileType>CppControl</FileType>
     </ClInclude>
@@ -146,6 +149,12 @@
       <FileType>CppControl</FileType>
     </ClInclude>
     <ClInclude Include="DocNotesBasePanel.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
+    <ClInclude Include="DocNotesPagePanel.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
+    <ClInclude Include="JalobaPagePanel.h">
       <FileType>CppControl</FileType>
     </ClInclude>
     <ClInclude Include="pch.h" />
@@ -165,11 +174,14 @@
     <ClCompile Include="AddColumnUserControl.cpp" />
     <ClCompile Include="AnalyzesChangeControl.cpp" />
     <ClCompile Include="AnalyzesListButton.cpp" />
+    <ClCompile Include="AnamnesisMorbiPagePanel.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="ButtonPanel.cpp" />
     <ClCompile Include="CustomComboBoxItem.cpp" />
     <ClCompile Include="CustomLabelWithButton.cpp" />
     <ClCompile Include="DocNotesBasePanel.cpp" />
+    <ClCompile Include="DocNotesPagePanel.cpp" />
+    <ClCompile Include="JalobaPagePanel.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -227,6 +239,9 @@
     <EmbeddedResource Include="AnalyzesChangeControl.resx">
       <DependentUpon>AnalyzesChangeControl.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AnamnesisMorbiPagePanel.resx">
+      <DependentUpon>AnamnesisMorbiPagePanel.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ButtonPanel.resx">
       <DependentUpon>ButtonPanel.h</DependentUpon>
     </EmbeddedResource>
@@ -235,6 +250,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DocNotesBasePanel.resx">
       <DependentUpon>DocNotesBasePanel.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DocNotesPagePanel.resx">
+      <DependentUpon>DocNotesPagePanel.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JalobaPagePanel.resx">
+      <DependentUpon>JalobaPagePanel.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
