@@ -1,4 +1,5 @@
 #pragma once
+#include "DocNotesPagePanel.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -15,7 +16,7 @@ namespace UnsaintedControls {
 	/// </summary>
 	public ref class DocNotesBasePanel : public System::Windows::Forms::UserControl
 	{
-		List<Panel^>^ PagePanelsList;
+		List<DocNotesPagePanel^>^ PagePanelsList;
 	public:
 		DocNotesBasePanel(void)
 		{
@@ -29,6 +30,11 @@ namespace UnsaintedControls {
 			//
 		}
 
+		property DocNotesPagePanel^ PagePanels {
+			void set(DocNotesPagePanel^ value) {
+
+			}
+		}
 	protected:
 		/// <summary>
 		/// Освободить все используемые ресурсы.
@@ -649,7 +655,7 @@ namespace UnsaintedControls {
 
 	}
 	private: System::Void InitializeInterface() {
-		PagePanelsList = gcnew List<Panel^>();
+		PagePanelsList = gcnew List<DocNotesPagePanel^>();
 	}
 	private: System::Void InitializeData() {
 
