@@ -36,6 +36,7 @@ namespace UnsaintedControls {
 	public:
 		SuperComboBox(void)
 		{
+			m_SelectedByDefaultItems = gcnew List<String^>();
 			items = gcnew Dictionary<String^, ButtonPanel^>();
 			m_selected = gcnew List<String^>();
 			m_locker = gcnew Locker(100);
@@ -74,6 +75,26 @@ namespace UnsaintedControls {
 				b_panel->MainButton->Click += gcnew EventHandler(b_panel, &ButtonPanel::main_button_Click);
 				textBox->AutoCompleteCustomSource->Add(title);
 				
+			}
+			flowLayoutPanel1->Controls->Add(textBox);
+		}
+		void AddCustomLabelWithButton(String^ title) {
+			if (title == nullptr)
+				return;
+			textBox->Parent->Controls->Remove(textBox);
+			CustomLabelWithButton^ label = gcnew CustomLabelWithButton(title, items[title]);
+			flowLayoutPanel1->Controls->Add(label);
+			items[title]->Hide();
+			flowLayoutPanel1->Controls->Add(textBox);
+		}
+		void AddCustomLabelWithButtonRange(List<String^>^ titles) {
+			if (titles == nullptr)
+				return;
+			textBox->Parent->Controls->Remove(textBox);
+			for each (String ^ title in titles) {
+				CustomLabelWithButton^ label = gcnew CustomLabelWithButton(title, items[title]);
+				flowLayoutPanel1->Controls->Add(label);
+				items[title]->Hide();
 			}
 			flowLayoutPanel1->Controls->Add(textBox);
 		}
@@ -182,7 +203,7 @@ namespace UnsaintedControls {
 		}
 		property List<String^>^ SelectedByDefaultItems {
 			void set(List<String^>^ value) {
-				AddButtonPanelsRange(value);
+				AddCustomLabelWithButtonRange(value);
 				m_SelectedByDefaultItems = value;
 			}
 			List<String^>^ get() {
@@ -297,7 +318,7 @@ namespace UnsaintedControls {
 			this->groupBox->Size = System::Drawing::Size(360, 110);
 			this->groupBox->TabIndex = 1;
 			this->groupBox->TabStop = false;
-			this->groupBox->Text = L"groupBox1";
+			this->groupBox->Text = L"SuperComboBox";
 			// 
 			// panel1
 			// 
@@ -340,7 +361,7 @@ namespace UnsaintedControls {
 			this->textBox->Margin = System::Windows::Forms::Padding(3, 6, 3, 3);
 			this->textBox->MinimumSize = System::Drawing::Size(0, 20);
 			this->textBox->Name = L"textBox";
-			this->textBox->Size = System::Drawing::Size(121, 20);
+			this->textBox->Size = System::Drawing::Size(174, 20);
 			this->textBox->TabIndex = 0;
 			this->textBox->Click += gcnew System::EventHandler(this, &SuperComboBox::textBox_Click);
 			this->textBox->TextChanged += gcnew System::EventHandler(this, &SuperComboBox::textBox_TextChanged);
@@ -386,7 +407,7 @@ namespace UnsaintedControls {
 			this->BackColor = System::Drawing::SystemColors::ControlLightLight;
 			this->Controls->Add(this->tableLayoutPanel1);
 			this->Margin = System::Windows::Forms::Padding(0);
-			this->MinimumSize = System::Drawing::Size(130, 0);
+			this->MinimumSize = System::Drawing::Size(140, 0);
 			this->Name = L"SuperComboBox";
 			this->Size = System::Drawing::Size(360, 110);
 			this->Click += gcnew System::EventHandler(this, &SuperComboBox::SuperComboBox_Click);
@@ -470,9 +491,11 @@ private: System::Void flowLayoutPanel1_ControlRemoved(System::Object^ sender, Sy
 		}			
 		else m_lastLabel = nullptr;
 		if (m_rtb == nullptr)
-			return;
-		m_rtb->Text = m_rtb->Text->Remove(m_rtb->Text->ToLower()->IndexOf(removed_label->Title), removed_label->Title->Length);
-		m_rtb->Text = m_rtb->Text->Trim(gcnew array<wchar_t>(2){',', ' '});
+			return;		
+		if (m_rtb->Text->ToLower()->IndexOf(removed_label->Title->ToLower()) > -1) {
+			m_rtb->Text = m_rtb->Text->Remove(m_rtb->Text->ToLower()->IndexOf(removed_label->Title->ToLower()), removed_label->Title->Length);
+			m_rtb->Text = m_rtb->Text->Trim(gcnew array<wchar_t>(2) { ',', ' ' });
+		}		
 	}
 }
 private: System::Void flowLayoutPanel1_ControlAdded(System::Object^ sender, System::Windows::Forms::ControlEventArgs^ e) {

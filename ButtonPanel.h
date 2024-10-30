@@ -276,13 +276,13 @@ private: System::Void delete_button_Click(System::Object^ sender, System::EventA
 private: System::Void edit_button_Click(System::Object^ sender, System::EventArgs^ e) {
 
 }
-	public: System::Void main_button_Click(System::Object^ sender, System::EventArgs^ e) {		
-		m_textbox->Parent->Controls->Remove(m_textbox);
-		CustomLabelWithButton^ label = gcnew CustomLabelWithButton(this->Title, this);
-		m_flowpanel->Controls->Add(label);
-		this->Hide();
-		m_flowpanel->Controls->Add(m_textbox);
-		m_textbox->Focus();
-	}
+public: System::Void main_button_Click(System::Object^ sender, System::EventArgs^ e) {		
+	m_textbox->Parent->Controls->Remove(m_textbox);
+	CustomLabelWithButton^ label = gcnew CustomLabelWithButton(this->Title, this);
+	m_flowpanel->Controls->Add(label);
+	this->Hide();
+	m_flowpanel->Controls->Add(m_textbox);
+	m_textbox->Focus();
+}
 };
 }

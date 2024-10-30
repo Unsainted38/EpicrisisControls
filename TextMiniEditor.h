@@ -17,7 +17,7 @@ namespace UnsaintedControls {
 	/// </summary>
 	public ref class TextMiniEditor : public System::Windows::Forms::UserControl
 	{
-
+		int previousCaretPos;
 	public:
 		TextMiniEditor(void)
 		{
@@ -34,6 +34,20 @@ namespace UnsaintedControls {
 				return richTextBox->Rtf;
 			}
 		}
+		property RichTextBox^ RichTextbox {
+			RichTextBox^ get() {
+				return richTextBox;
+			}
+		}
+		property String^ Text {
+			void set(String ^ value) override {
+				richTextBox->Text = value;
+			}
+			String^ get() override {
+				return richTextBox->Text;
+			}
+		}
+		event EventHandler^ TextMiniEditor_textChanged;
 	protected:
 		/// <summary>
 		/// Освободить все используемые ресурсы.
@@ -150,6 +164,7 @@ namespace UnsaintedControls {
 			this->richTextBox->Size = System::Drawing::Size(730, 50);
 			this->richTextBox->TabIndex = 0;
 			this->richTextBox->Text = L"";
+			this->richTextBox->SelectionChanged += gcnew System::EventHandler(this, &TextMiniEditor::richTextBox_SelectionChanged);
 			this->richTextBox->TextChanged += gcnew System::EventHandler(this, &TextMiniEditor::richTextBox_TextChanged);
 			this->richTextBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &TextMiniEditor::TextMiniEditor_KeyDown);
 			// 
@@ -196,6 +211,7 @@ namespace UnsaintedControls {
 			this->Fontsize_numericUpDown->Name = L"Fontsize_numericUpDown";
 			this->Fontsize_numericUpDown->Size = System::Drawing::Size(48, 28);
 			this->Fontsize_numericUpDown->TabIndex = 0;
+			this->Fontsize_numericUpDown->TabStop = false;
 			this->Fontsize_numericUpDown->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 11, 0, 0, 0 });
 			this->Fontsize_numericUpDown->ValueChanged += gcnew System::EventHandler(this, &TextMiniEditor::Fontsize_numericUpDown_ValueChanged);
 			// 
@@ -328,7 +344,7 @@ namespace UnsaintedControls {
 			this->Anchor_button->TabStop = false;
 			this->Anchor_button->Text = L"A";
 			this->Anchor_button->UseVisualStyleBackColor = true;
-			this->Anchor_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::Unker_button_Click);
+			this->Anchor_button->Click += gcnew System::EventHandler(this, &TextMiniEditor::Anchor_button_Click);
 			// 
 			// NumList_button
 			// 
@@ -665,7 +681,7 @@ namespace UnsaintedControls {
 		   }
 	private: System::Void TextMiniEditor_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 		if (e->Control && (e->KeyCode == Keys::B)) {
-
+			Bold();
 		}
 		if (e->Control && (e->KeyCode == Keys::I)) {
 			e->SuppressKeyPress = true;
@@ -733,7 +749,7 @@ namespace UnsaintedControls {
 	private: System::Void Lowercase_button_Click(System::Object^ sender, System::EventArgs^ e) {
 		Lowercase();
 	}
-	private: System::Void Unker_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void Anchor_button_Click(System::Object^ sender, System::EventArgs^ e) {
 		Toolbar_button_Click(Anchor_button);
 	}
 	private: System::Void NumList_button_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -771,6 +787,65 @@ namespace UnsaintedControls {
 
 		// Устанавливаем новую высоту с учетом минимальных и максимальных границ
 		richTextBox->Height = System::Math::Max(minHeight, System::Math::Min(newHeight, maxHeight));
+		TextMiniEditor_textChanged(sender, e);
 	}
-	};
+	private: System::Void richTextBox_SelectionChanged(System::Object^ sender, System::EventArgs^ e) {
+		UpdateButtonStyles();
+		UpdateNumericUpDown();
+	}
+	private: Void UpdateButtonStyles() {
+		auto currentFont = richTextBox->SelectionFont;
+		auto currentAlignment = richTextBox->SelectionAlignment;
+		Bold_button->BackColor = (currentFont != nullptr && currentFont->Bold)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		Italic_button->BackColor = (currentFont != nullptr && currentFont->Italic)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		Underline_button->BackColor = (currentFont != nullptr && currentFont->Underline)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		Uppercase_button->BackColor = (richTextBox->SelectionCharOffset == 6)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		Lowercase_button->BackColor = (richTextBox->SelectionCharOffset == -6)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		/*buttonsDict["anchor"]->BackColor = (currentFont != nullptr && currentFont->Bold)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		buttonsDict["numlist"]->BackColor = (currentFont != nullptr && currentFont->Bold)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		buttonsDict["dotlist"]->BackColor = (currentFont != nullptr && currentFont->Bold)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);*/
+		LeftAlign_button->BackColor = (currentAlignment == HorizontalAlignment::Left)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		CenterAlign_button->BackColor = (currentAlignment == HorizontalAlignment::Center)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		RightAlign_button->BackColor = (currentAlignment == HorizontalAlignment::Right)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);
+		/*buttonsDict["just_align"]->BackColor = (currentFont != nullptr && currentFont->Bold)
+			? Color::FromKnownColor(KnownColor::AppWorkspace)
+			: Color::FromKnownColor(KnownColor::ControlLightLight);*/
+	}
+	private: Void UpdateNumericUpDown() {
+    int currentCaretPosition = richTextBox->SelectionStart;
+    if (currentCaretPosition != previousCaretPos) {
+        if (richTextBox->SelectionFont != nullptr) {
+            // Обновляем размер шрифта, если выделен текст с единым шрифтом
+            auto currentFontSize = richTextBox->SelectionFont->SizeInPoints;
+			Fontsize_numericUpDown->Value = Convert::ToDecimal(currentFontSize);
+        }
+        else {
+			Fontsize_numericUpDown->Text = "";
+        }
+    }
+    previousCaretPos = currentCaretPosition;
+}
+};
 }
